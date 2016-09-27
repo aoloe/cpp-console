@@ -31,16 +31,16 @@ public:
     void processInput(const std::string &line);
 
 private:
-	struct Command {
-		const std::string name;
-		std::string description;
-		const unsigned int numArguments;
-		const std::vector<std::string> argumentNames;
-		const std::vector<std::string> defaultArguments;
-		std::function<void(std::vector<std::string>&)> call;
-		std::function<std::string(void)> getUsage;
+    struct Command {
+        const std::string name;
+        std::string description;
+        const unsigned int numArguments;
+        const std::vector<std::string> argumentNames;
+        const std::vector<std::string> defaultArguments;
+        std::function<void(std::vector<std::string>&)> call;
+        std::function<std::string(void)> getUsage;
 
-		explicit Command(const std::string &name, const std::string &description, unsigned int numArguments, const std::vector<std::string> &argumentNames, const std::vector<std::string> &defaultArguments) 
+        explicit Command(const std::string &name, const std::string &description, unsigned int numArguments, const std::vector<std::string> &argumentNames, const std::vector<std::string> &defaultArguments) 
             : name(name)
             , description(description)
             , numArguments(numArguments)
@@ -49,16 +49,16 @@ private:
         {
         }
 
-		// disallow copying
-		Command(Command const &) = delete;
-		Command& operator=(const Command &) = delete;
+        // disallow copying
+        Command(Command const &) = delete;
+        Command& operator=(const Command &) = delete;
     };
 
-	std::unordered_map<std::string, Command*> commands;
-	std::set<std::string> names;
+    std::unordered_map<std::string, Command*> commands;
+    std::set<std::string> names;
 
 public:
-	static std::vector<std::string> tokenizeLine(const std::string &line);
+    static std::vector<std::string> tokenizeLine(const std::string &line);
 
 };
 
@@ -71,19 +71,19 @@ template <typename... Args>
 void Console::registerCommand(const std::string &name, const std::string &description, const std::vector<std::string> &argumentNames, const std::vector<std::string> &defaultArguments, const std::function<void(Args...)> &callback)
 {
 
-	assert(argumentNames.size() <= sizeof...(Args));
-	assert(defaultArguments.size() <= sizeof...(Args));
-	assert(commands.find(name) == commands.end());
-	assert(names.find(name) == names.end());
+    assert(argumentNames.size() <= sizeof...(Args));
+    assert(defaultArguments.size() <= sizeof...(Args));
+    assert(commands.find(name) == commands.end());
+    assert(names.find(name) == names.end());
 
-	Command* command = new Command(name, description, sizeof...(Args), argumentNames, defaultArguments);
+    Command* command = new Command(name, description, sizeof...(Args), argumentNames, defaultArguments);
 
-	command->call = [this, command, callback](std::vector<std::string> &arguments) {
+    command->call = [this, command, callback](std::vector<std::string> &arguments) {
         // TODO: add the arguments binding from the original RegisterCommand()
     };
 
-	commands[name] = command;
-	names.insert(name);
+    commands[name] = command;
+    names.insert(name);
 }
 
 #endif
