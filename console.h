@@ -58,6 +58,7 @@ private:
     std::set<std::string> names;
 
 public:
+    // TODO: make this private
     static std::vector<std::string> tokenizeLine(const std::string &line);
 
 };

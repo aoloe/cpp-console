@@ -11,16 +11,16 @@ The [C++ Learning Group at the OpenTechSchool Zurich](https://www.meetup.com/ope
 
 ## Status
 
-The implementation is in its infancy and only a basic version of `registerCommand` has been already implemented .
+The implementation is in its infancy and only a basic version of `registerCommand()` and `processInput()` have been already implemented .
 
-## Notes
+## Todo
 
-### `wstring` vs `string`
+Next steps:
 
-Michael is using `wstring`s for the keys in the maps.
-
-After having read
-
-http://stackoverflow.com/questions/402283/stdwstring-vs-stdstring
-
-we decided to stick to `string`s for now.
+- Get the "doIt" command to work (implement the body of `command->call` in the `registerCommand()` template).
+- in the Console constructor, register and implement the commands for the list of commands (is `cmdlist` a good command? `dir` inspired by python? or `help ? commands`? or `console ? commands`?) and for `help`.
+- implement the arguments recognition in `registerCommand()`.
+- add a new command with arguments.
+- implement the destructor.
+- create a program that can be controlled through the console.
+- suggest similar commands if no matching found?

@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-void help()
+void doIt()
 {
     std::cout << "Don't abuse me" << std::endl;
 }
@@ -12,12 +12,14 @@ int main()
 {
     Console console;
     console.registerCommand(
-        "help", // command
-        "show usage", // description
+        "doIt", // command
+        "do something", // description
         {}, // argument names
         {}, // argument default values
-        (std::function<void(void)>) ([]() {help();}) // callback
+        (std::function<void(void)>) ([]() {doIt();}) // callback
     );
     for (auto i: Console::tokenizeLine("this is a text"))
           std::cout << i << std::endl;
+    // console.processInput("doIt ?");
+    console.processInput("doIt");
 }
