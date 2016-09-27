@@ -1,5 +1,7 @@
 #include "console.h"
 #include <iostream>
+#include <string>
+#include <vector>
 
 void help()
 {
@@ -16,4 +18,6 @@ int main()
         {}, // argument default values
         (std::function<void(void)>) ([]() {help();}) // callback
     );
+    for (auto i: Console::tokenizeLine("this is a text"))
+          std::cout << i << std::endl;
 }

@@ -27,6 +27,9 @@ public:
     template <typename... Args>
         void registerCommand(const std::string &name, const std::string &description, const std::vector<std::string> &argumentNames, const std::vector<std::string> &defaultArguments, const std::function<void(Args...)> &callback);
 
+
+    void processInput(const std::string &line);
+
 private:
 	struct Command {
 		const std::string name;
@@ -53,6 +56,10 @@ private:
 
 	std::unordered_map<std::string, Command*> commands;
 	std::set<std::string> names;
+
+public:
+	static std::vector<std::string> tokenizeLine(const std::string &line);
+
 };
 
 /***********************************
