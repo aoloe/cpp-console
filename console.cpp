@@ -5,6 +5,7 @@
 
 Console::Console()
 {
+    registerHelpCommand();
 }
 
 Console::~Console()
@@ -109,4 +110,45 @@ std::vector<std::string> Console::tokenizeLine(const std::string &line)
 	if (!currWord.empty())
 		out.push_back(currWord);
 	return out;
+}
+
+void Console::registerHelpCommand()
+{
+    registerCommand(
+        "help",
+        "Prints information about using the console or a given command or variable.",
+        {"term"},
+        {""},
+        (std::function<void(std::string)>) ([this](std::string term) {helpCommand(term);})
+    );
+}
+
+void Console::helpCommand(std::string term)
+{
+    if (term.empty()) {
+        // TODO by Michael: print version number
+        print("Welcome to the console of (this engine).");
+        print("  Command syntax:          \"command_name parameter1 parameter2 ...\"");
+        print("Type \"help commands [filter]\" to find a command.");
+        print("Type \"command_name ?\" to display detailed information.");
+    }
+    else if (term == "commands") {
+        listOfCommands(/* filter */);
+    }
+    else {
+        // TODO: if we make the commands case insensitive, we have to do the same here too
+        if (commands.find(term) != commands.end()) {
+            print(commands[term]->getUsage());
+            if (!commands[term]->description.empty())
+                print("    " + commands[term]->description);
+        }
+        else {
+            print("Unknown command or variable \"" + term + "\".");
+        }
+    }
+}
+
+void Console::listOfCommands(/* std::string filter */)
+{
+    // TODO: implement the list of commands
 }

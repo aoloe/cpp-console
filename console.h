@@ -59,6 +59,9 @@ private:
 
     std::unordered_map<std::string, Command*> commands;
     std::set<std::string> names;
+    void registerHelpCommand();
+    void helpCommand(std::string term);
+    void listOfCommands(/* std::string term */);
 
 
 	template <typename T>

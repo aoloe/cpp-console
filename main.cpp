@@ -55,4 +55,5 @@ int main()
     console.processInput("doIt");
     console.processInput("say arthur");
     console.processInput("say");
+    console.processInput("help");
 }

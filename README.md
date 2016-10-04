@@ -17,11 +17,13 @@ The implementation is in its infancy and only a basic version of `registerComman
 
 Next steps:
 
-- Get the "doIt" command to work (implement the body of `command->call` in the `registerCommand()` function template).
-- in the Console constructor, register and implement the commands for the list of commands (is `cmdlist` a good command? `dir` inspired by python? or `help ? commands`? or `console ? commands`?) and for `help`.
-- implement the arguments recognition in `registerCommand()`.
-- add a new command with arguments.
+- implement the list of commands. 
+- create a demo program. 
 - implement the destructor.
+- implement commandAlias
 - create a program that can be controlled through the console.
 - suggest similar commands if no matching found?
+- eventually implement a "tab complete" (return a list of commands starting with...)
 - suggestion: if there is a return value, it can be be displayed on the console. Or: provide an output channel.
+- rename the project as "CommandEngine"?
+- how to get print() not to print but to "return" the values (pass a stream?)
