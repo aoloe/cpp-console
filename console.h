@@ -71,6 +71,8 @@ private:
 		static std::function<void()>    bindCallback(std::function<void(T, Args...)> callback, const std::vector<std::string> &arguments, int argumentIndex);
 
 
+    void print(std::string output) {std::cout << output << std::endl;}
+
 public:
     // TODO: make this private
     static std::vector<std::string> tokenizeLine(const std::string &line);
@@ -94,24 +96,54 @@ void Console::registerCommand(const std::string &name, const std::string &descri
     Command* command = new Command(name, description, sizeof...(Args), argumentNames, defaultArguments);
 
     command->call = [this, command, callback](std::vector<std::string> &arguments) {
-        // TODO: add the arguments checks and set the default arguments
-        bool failed = false;
-        std::function<void()> boundCallback;
-        // bind the command callback recursively while allowing type conversion errors to raise exceptions
-        try {
-            boundCallback = bindCallback(callback, arguments, 0);
-        }
-        catch (const std::exception&) {
-            failed = true;
+ 
+        // add the arguments checks and set the default arguments
+		unsigned int requiredArguments = sizeof...(Args) - command->defaultArguments.size();
+
+		// make sure the number of arguments matches
+		if (arguments.size() < requiredArguments) {
+			print("Too few arguments.");
+		}
+		else if (arguments.size() > sizeof...(Args)) {
+			print("Too many arguments.");
+		}
+		else {
+			// append default arguments as necessary
+			arguments.insert(arguments.end(), command->defaultArguments.begin() + (arguments.size() - requiredArguments), command->defaultArguments.end());
+			assert(arguments.size() == sizeof...(Args));
+
+            bool failed = false;
+            std::function<void()> boundCallback;
+            // bind the command callback recursively while allowing type conversion errors to raise exceptions
+            try {
+                boundCallback = bindCallback(callback, arguments, 0);
+            }
+            catch (const std::exception&) {
+                // TODO: remove this?
+                std::cout << "crashed" << std::endl;
+                failed = true;
+            }
+
+            if (!failed) {
+                // actually execute the command
+                boundCallback();
+
+                return;
+            }
         }
 
-        if (!failed) {
-            // actually execute the command
-            boundCallback();
-
-            return;
-        }
+		// if we end up here, something went wrong
+        // TODO: activate this
+		// print(command->getUsage());
     };
+
+    // TODO: activate this
+    /*
+	command->getUsage = [this, command]() {
+		unsigned int requiredArguments = sizeof...(Args) - command->defaultArguments.size();
+		return "Usage: " + command->name + nameArguments<Args...>::get(command->argumentNames, 0, requiredArguments);
+	};
+    */
 
     commands[name] = command;
     names.insert(name);
@@ -136,7 +168,7 @@ std::function<void()> Console::bindCallback(std::function<void(T, Args...)> call
 {
     // TODO: remove the cout
     std::cout << "argument " << argumentIndex << ": " << arguments[argumentIndex] << std::endl;
-	T value = argumentConverter<T>::convert(arguments[argumentIndex]);
+	T value = argumentConverter<T>::convert(arguments.at(argumentIndex));
 	std::function<void(Args...)> nextCallback = [callback, value](Args... args) {
 		callback(value, args...);
 	};

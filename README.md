@@ -24,3 +24,4 @@ Next steps:
 - implement the destructor.
 - create a program that can be controlled through the console.
 - suggest similar commands if no matching found?
+- suggestion: if there is a return value, it can be be displayed on the console. Or: provide an output channel.
