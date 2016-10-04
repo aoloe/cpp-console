@@ -17,7 +17,7 @@ The implementation is in its infancy and only a basic version of `registerComman
 
 Next steps:
 
-- Get the "doIt" command to work (implement the body of `command->call` in the `registerCommand()` template).
+- Get the "doIt" command to work (implement the body of `command->call` in the `registerCommand()` function template).
 - in the Console constructor, register and implement the commands for the list of commands (is `cmdlist` a good command? `dir` inspired by python? or `help ? commands`? or `console ? commands`?) and for `help`.
 - implement the arguments recognition in `registerCommand()`.
 - add a new command with arguments.

@@ -5,7 +5,7 @@
 
 void doIt()
 {
-    std::cout << "Don't abuse me" << std::endl;
+    std::cout << "I did it." << std::endl;
 }
 
 int main()
