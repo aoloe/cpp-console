@@ -64,14 +64,14 @@ private:
     void listOfCommands(/* std::string term */);
 
 
-	template <typename T>
-	struct argumentConverter {
-		static inline T convert(const std::string &s);
-	};
+    template <typename T>
+        struct argumentConverter {
+            static inline T convert(const std::string &s);
+        };
 
-	static inline std::function<void()> bindCallback(std::function<void(          )> callback, const std::vector<std::string> &arguments, int argumentIndex);
-	template <typename T, typename... Args>
-		static std::function<void()>    bindCallback(std::function<void(T, Args...)> callback, const std::vector<std::string> &arguments, int argumentIndex);
+    static inline std::function<void()> bindCallback(std::function<void(          )> callback, const std::vector<std::string> &arguments, int argumentIndex);
+    template <typename T, typename... Args>
+        static std::function<void()>    bindCallback(std::function<void(T, Args...)> callback, const std::vector<std::string> &arguments, int argumentIndex);
 
 
     void print(std::string output) {std::cout << output << std::endl;}
@@ -101,19 +101,19 @@ void Console::registerCommand(const std::string &name, const std::string &descri
     command->call = [this, command, callback](std::vector<std::string> &arguments) {
  
         // add the arguments checks and set the default arguments
-		unsigned int requiredArguments = sizeof...(Args) - command->defaultArguments.size();
+        unsigned int requiredArguments = sizeof...(Args) - command->defaultArguments.size();
 
-		// make sure the number of arguments matches
-		if (arguments.size() < requiredArguments) {
-			print("Too few arguments.");
-		}
-		else if (arguments.size() > sizeof...(Args)) {
-			print("Too many arguments.");
-		}
-		else {
-			// append default arguments as necessary
-			arguments.insert(arguments.end(), command->defaultArguments.begin() + (arguments.size() - requiredArguments), command->defaultArguments.end());
-			assert(arguments.size() == sizeof...(Args));
+        // make sure the number of arguments matches
+        if (arguments.size() < requiredArguments) {
+            print("Too few arguments.");
+        }
+        else if (arguments.size() > sizeof...(Args)) {
+            print("Too many arguments.");
+        }
+        else {
+            // append default arguments as necessary
+            arguments.insert(arguments.end(), command->defaultArguments.begin() + (arguments.size() - requiredArguments), command->defaultArguments.end());
+            assert(arguments.size() == sizeof...(Args));
 
             bool failed = false;
             std::function<void()> boundCallback;
@@ -135,17 +135,17 @@ void Console::registerCommand(const std::string &name, const std::string &descri
             }
         }
 
-		// if we end up here, something went wrong
+        // if we end up here, something went wrong
         // TODO: activate this
-		// print(command->getUsage());
+        // print(command->getUsage());
     };
 
     // TODO: activate this
     /*
-	command->getUsage = [this, command]() {
-		unsigned int requiredArguments = sizeof...(Args) - command->defaultArguments.size();
-		return "Usage: " + command->name + nameArguments<Args...>::get(command->argumentNames, 0, requiredArguments);
-	};
+    command->getUsage = [this, command]() {
+        unsigned int requiredArguments = sizeof...(Args) - command->defaultArguments.size();
+        return "Usage: " + command->name + nameArguments<Args...>::get(command->argumentNames, 0, requiredArguments);
+    };
     */
 
     commands[name] = command;
@@ -158,7 +158,7 @@ void Console::registerCommand(const std::string &name, const std::string &descri
 inline std::function<void()> Console::bindCallback(std::function<void()> callback, const std::vector<std::string> &, int) {
     // TODO: remove the cout
     std::cout << "ain't no arguments (no more)" << std::endl;
-	return callback;
+    return callback;
 }
 
 /**
@@ -171,11 +171,11 @@ std::function<void()> Console::bindCallback(std::function<void(T, Args...)> call
 {
     // TODO: remove the cout
     std::cout << "argument " << argumentIndex << ": " << arguments[argumentIndex] << std::endl;
-	T value = argumentConverter<T>::convert(arguments.at(argumentIndex));
-	std::function<void(Args...)> nextCallback = [callback, value](Args... args) {
-		callback(value, args...);
-	};
-	return bindCallback(nextCallback, arguments, argumentIndex + 1);
+    T value = argumentConverter<T>::convert(arguments.at(argumentIndex));
+    std::function<void(Args...)> nextCallback = [callback, value](Args... args) {
+        callback(value, args...);
+    };
+    return bindCallback(nextCallback, arguments, argumentIndex + 1);
 }
 
 /**
@@ -185,7 +185,7 @@ std::function<void()> Console::bindCallback(std::function<void(T, Args...)> call
 template <typename T>
 inline T Console::argumentConverter<T>::convert(const std::string &s)
 {
-	static_assert(sizeof(T) != sizeof(T), "Console commands may only take arguments of type int, float or std::string.");
+    static_assert(sizeof(T) != sizeof(T), "Console commands may only take arguments of type int, float or std::string.");
 }
 
 /**
@@ -194,7 +194,7 @@ inline T Console::argumentConverter<T>::convert(const std::string &s)
 template <>
 inline int Console::argumentConverter<int>::convert(const std::string &s)
 {
-	return std::stoi(s);
+    return std::stoi(s);
 }
 
 /**
@@ -203,7 +203,7 @@ inline int Console::argumentConverter<int>::convert(const std::string &s)
 template <>
 inline float Console::argumentConverter<float>::convert(const std::string &s)
 {
-	return std::stof(s);
+    return std::stof(s);
 }
 
 /**
@@ -212,7 +212,7 @@ inline float Console::argumentConverter<float>::convert(const std::string &s)
 template <>
 inline std::string Console::argumentConverter<std::string>::convert(const std::string &s)
 {
-	return s;
+    return s;
 }
 
 
