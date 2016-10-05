@@ -116,7 +116,7 @@ void Console::registerHelpCommand()
 {
     registerCommand(
         "help",
-        "Prints information about using the console or a given command or variable.",
+        "Prints information about using the console or a given command.",
         {"term"},
         {""},
         (std::function<void(std::string)>) ([this](std::string term) {helpCommand(term);})
