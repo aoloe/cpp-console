@@ -47,13 +47,12 @@ int main()
         (std::function<void(std::string)>) ([](std::string name) {sayTheName(name);}) // callback
     );
 
-    /*
-    for (auto i: Console::tokenizeLine("this is a text"))
-          std::cout << i << std::endl;
-    */
+    console.registerAlias("hey", "say"); // TODO: finish the alias implementation
+
     std::cout << console.processInput("doIt");
     std::cout << console.processInput("say arthur");
     std::cout << console.processInput("say");
+    // std::cout << console.processInput("! dent");
     std::cout << console.processInput("help");
     std::cout << console.processInput("help say");
     std::cout << console.processInput("help commands");

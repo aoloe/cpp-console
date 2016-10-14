@@ -30,6 +30,7 @@ public:
      */
     template <typename... Args>
         void registerCommand(const std::string &name, const std::string &description, const std::vector<std::string> &argumentNames, const std::vector<std::string> &defaultArguments, const std::function<void(Args...)> &callback);
+        void registerAlias(const std::string &alias, const std::string &command);
 
 
     std::string processInput(const std::string &line);
@@ -75,11 +76,11 @@ private:
     template <typename T, typename... Args>
         static std::function<void()>    bindCallback(std::function<void(T, Args...)> callback, const std::vector<std::string> &arguments, int argumentIndex);
 
-	template <typename... Args>
-	struct NameArguments {
-		static inline std::string get(const std::vector<std::string> &argumentNames, unsigned int nextName, unsigned int requiredArguments);
+    template <typename... Args>
+    struct NameArguments {
+        static inline std::string get(const std::vector<std::string> &argumentNames, unsigned int nextName, unsigned int requiredArguments);
 
-	};
+    };
 
     std::stringstream printBuffer;
     void print(std::string output) {printBuffer << output << std::endl;}
@@ -160,8 +161,6 @@ void Console::registerCommand(const std::string &name, const std::string &descri
  * bindCallback, base case
  */
 inline std::function<void()> Console::bindCallback(std::function<void()> callback, const std::vector<std::string> &, int) {
-    // TODO: remove the cout
-    std::cout << "ain't no arguments (no more)" << std::endl;
     return callback;
 }
 
@@ -173,8 +172,6 @@ inline std::function<void()> Console::bindCallback(std::function<void()> callbac
 template <typename T, typename... Args>
 std::function<void()> Console::bindCallback(std::function<void(T, Args...)> callback, const std::vector<std::string> &arguments, int argumentIndex)
 {
-    // TODO: remove the cout
-    std::cout << "argument " << argumentIndex << ": " << arguments[argumentIndex] << std::endl;
     T value = argumentConverter<T>::convert(arguments.at(argumentIndex));
     std::function<void(Args...)> nextCallback = [callback, value](Args... args) {
         callback(value, args...);
@@ -224,15 +221,15 @@ inline std::string Console::argumentConverter<std::string>::convert(const std::s
  */
 template <>
 struct Console::NameArguments<> {
-	static inline std::string get(const std::vector<std::string> argumentNames, unsigned int nextName, unsigned int requiredArguments) {
+    static inline std::string get(const std::vector<std::string> argumentNames, unsigned int nextName, unsigned int requiredArguments) {
         (void)argumentNames; // silence the unused compile warnings
-		if (nextName > requiredArguments) {
-			return "]";
-		}
-		else {
-			return "";
-		}
-	}
+        if (nextName > requiredArguments) {
+            return "]";
+        }
+        else {
+            return "";
+        }
+    }
 };
 
 /**
@@ -240,31 +237,31 @@ struct Console::NameArguments<> {
  */
 template <typename T, typename... Args>
 struct Console::NameArguments<T, Args...> {
-	static inline std::string get(const std::vector<std::string> &argumentNames, unsigned int nextName, unsigned int requiredArguments) {
-		std::string nameT;
-		if (typeid(T) == typeid(int)) {
-			nameT = "<int";
-		}
-		else if (typeid(T) == typeid(float)) {
-			nameT = "<float";
-		}
-		else if (typeid(T) == typeid(std::string)) {
-			nameT = "<string";
-		}
-		else {
-			nameT = "<???";
-		}
-		if (argumentNames.size() > nextName && !argumentNames[nextName].empty()) {
-			nameT += " " + argumentNames[nextName];
-		}
-		nameT += ">";
+    static inline std::string get(const std::vector<std::string> &argumentNames, unsigned int nextName, unsigned int requiredArguments) {
+        std::string nameT;
+        if (typeid(T) == typeid(int)) {
+            nameT = "<int";
+        }
+        else if (typeid(T) == typeid(float)) {
+            nameT = "<float";
+        }
+        else if (typeid(T) == typeid(std::string)) {
+            nameT = "<string";
+        }
+        else {
+            nameT = "<???";
+        }
+        if (argumentNames.size() > nextName && !argumentNames[nextName].empty()) {
+            nameT += " " + argumentNames[nextName];
+        }
+        nameT += ">";
 
-		if (nextName == requiredArguments) {
-			nameT = "[" + nameT;
-		}
+        if (nextName == requiredArguments) {
+            nameT = "[" + nameT;
+        }
 
-		return " " + nameT + NameArguments<Args...>::get(argumentNames, nextName + 1, requiredArguments);
-	}
+        return " " + nameT + NameArguments<Args...>::get(argumentNames, nextName + 1, requiredArguments);
+    }
 };
 
 

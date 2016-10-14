@@ -24,20 +24,30 @@ You can get a list of commands by typing `help commands`.
 
 ## Status
 
-The implementation is in its infancy and only a basic version of `registerCommand()` and `processInput()` have been already implemented .
+Commands can be registered and triggered.
+
+The engine is not complete and has not been tested in production yet, but it should work.
 
 ## Todo
 
 Next steps:
 
-- change `getUsage()` to return "(<string> name, [<int> i])" 
+- ask for MIT / BSD licensing.
+- move the action on strings (tokenize, argumentConverter, evt. the case insensitive functions) to a separate "Utils" class.
+- change `getUsage()` to return "(<string> name, [<int> i])"?
 - implement the filter for the list of commands. 
 - create a demo program. 
-- implement the destructor.
 - implement commandAlias
 - suggestion: if there is a return value, it can be be displayed on the console. Or: provide an output channel.
+- check if we should bother about BOM
+- allow to run a list of commands from a text file?
+- check if the `names` list is really needed (only used in the assert)
 
-- create a program that can be controlled through the console.
 - suggest similar commands if no matching found?
 - eventually implement a "tab complete" (return a list of commands starting with...)
 - rename the project as "CommandEngine"?
+- tests:
+  - add a command that already exists
+  - add an alias that already exists (alias, command)
+  - add an alias to a command that does not exist
+  

@@ -11,12 +11,28 @@ Console::Console()
 
 Console::~Console()
 {
-	for (std::unordered_map<std::string, Command*>::iterator::value_type &vt : commands) {
-		delete vt.second;
-	}
-	commands.clear();
+    for (std::unordered_map<std::string, Command*>::iterator::value_type &vt : commands) {
+        delete vt.second;
+    }
+    commands.clear();
 }
 
+/**
+ * TODO:
+ * - the alias does not get registered.
+ */
+void Console::registerAlias(const std::string &alias, const std::string &command)
+{
+    assert(commands.find(command) != commands.end());
+    assert(commands.find(alias) == commands.end());
+    assert(names.find(alias) == names.end()); // TODO: rename names?
+    std::cout << "alias alias " << alias << std::endl;
+    std::cout << "alias command " << commands[command] << std::endl;
+    Command *c = commands[command];
+    std::cout << "alias command " << c->getUsage() << std::endl;
+    // commands[alias] = commands[command]; // TODO: why does it fail?
+    names.insert(alias);
+}
 
 /**
  * @brief process an input line possibly containing commands
