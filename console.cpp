@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+#include <map>
 
 Console::Console()
 {
@@ -10,6 +11,10 @@ Console::Console()
 
 Console::~Console()
 {
+	for (std::unordered_map<std::string, Command*>::iterator::value_type &vt : commands) {
+		delete vt.second;
+	}
+	commands.clear();
 }
 
 
@@ -28,19 +33,15 @@ Console::~Console()
  * - create an history of inputs
  * - eventually make the commands lowercase / case insensitive
  */
-void Console::processInput(const std::string &line)
+std::string Console::processInput(const std::string &line)
 {
-   std::vector<std::string> tokens = tokenizeLine(line);
+    printBuffer.str(std::string()); // clear()
+    std::vector<std::string> tokens = tokenizeLine(line);
 
-   if (tokens.size() == 0)
-       return;
+    if (tokens.size() == 0)
+        return "";
 
-   std::string identifier = tokens.at(0);
-
-    if (tokens.size() > 1 && tokens.at(1) == "?") {
-        commands["help"]->call(tokens);
-        return;
-    }
+    std::string identifier = tokens.at(0);
 
     tokens.erase(tokens.begin());
 
@@ -49,8 +50,10 @@ void Console::processInput(const std::string &line)
     }
     else {
         // TODO: we might want a more flexible way to give feedback
-        std::cout << "Unknown command \"" + identifier + "\"." << std::endl;
+        print("Unknown command \"" + identifier + "\".");
+
     }
+    return printBuffer.str();
 }
 
 /**
@@ -130,10 +133,10 @@ void Console::helpCommand(std::string term)
         print("Welcome to the console of (this engine).");
         print("  Command syntax:          \"command_name parameter1 parameter2 ...\"");
         print("Type \"help commands [filter]\" to find a command.");
-        print("Type \"command_name ?\" to display detailed information.");
+        print("Type \"help command_name\" to display detailed information.");
     }
     else if (term == "commands") {
-        listOfCommands(/* filter */);
+        listOfCommands("");
     }
     else {
         // TODO: if we make the commands case insensitive, we have to do the same here too
@@ -148,7 +151,17 @@ void Console::helpCommand(std::string term)
     }
 }
 
-void Console::listOfCommands(/* std::string filter */)
+void Console::listOfCommands(std::string filter)
 {
-    // TODO: implement the list of commands
+    // TODO: implement the filter
+    // TODO: we might want to make the filter case insensitive
+    unsigned int count = 0;
+    std::map<std::string, Command*> ordered(commands.begin(), commands.end());
+
+    for (std::map<std::string, Command*>::iterator::value_type &value : ordered) {
+        print(value.second->name);
+        print("    " + value.second->description);
+        count++;
+    }
+    print(std::to_string(count) + " matching commands found.");
 }

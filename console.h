@@ -5,6 +5,7 @@
 
 #include <functional>
 #include <string>
+#include <sstream>
 #include <vector>
 #include <set>
 #include <unordered_map>
@@ -31,7 +32,7 @@ public:
         void registerCommand(const std::string &name, const std::string &description, const std::vector<std::string> &argumentNames, const std::vector<std::string> &defaultArguments, const std::function<void(Args...)> &callback);
 
 
-    void processInput(const std::string &line);
+    std::string processInput(const std::string &line);
 
 private:
     struct Command {
@@ -61,6 +62,7 @@ private:
     std::set<std::string> names;
     void registerHelpCommand();
     void helpCommand(std::string term);
+    void listOfCommands(std::string filter);
     void listOfCommands(/* std::string term */);
 
 
@@ -73,8 +75,14 @@ private:
     template <typename T, typename... Args>
         static std::function<void()>    bindCallback(std::function<void(T, Args...)> callback, const std::vector<std::string> &arguments, int argumentIndex);
 
+	template <typename... Args>
+	struct NameArguments {
+		static inline std::string get(const std::vector<std::string> &argumentNames, unsigned int nextName, unsigned int requiredArguments);
 
-    void print(std::string output) {std::cout << output << std::endl;}
+	};
+
+    std::stringstream printBuffer;
+    void print(std::string output) {printBuffer << output << std::endl;}
 
 public:
     // TODO: make this private
@@ -136,17 +144,13 @@ void Console::registerCommand(const std::string &name, const std::string &descri
         }
 
         // if we end up here, something went wrong
-        // TODO: activate this
         // print(command->getUsage());
     };
 
-    // TODO: activate this
-    /*
     command->getUsage = [this, command]() {
         unsigned int requiredArguments = sizeof...(Args) - command->defaultArguments.size();
-        return "Usage: " + command->name + nameArguments<Args...>::get(command->argumentNames, 0, requiredArguments);
+        return "Usage: " + command->name + NameArguments<Args...>::get(command->argumentNames, 0, requiredArguments);
     };
-    */
 
     commands[name] = command;
     names.insert(name);
@@ -214,6 +218,54 @@ inline std::string Console::argumentConverter<std::string>::convert(const std::s
 {
     return s;
 }
+
+/**
+ * Return the list of the arguments of a command pretty printed. Base case.
+ */
+template <>
+struct Console::NameArguments<> {
+	static inline std::string get(const std::vector<std::string> argumentNames, unsigned int nextName, unsigned int requiredArguments) {
+        (void)argumentNames; // silence the unused compile warnings
+		if (nextName > requiredArguments) {
+			return "]";
+		}
+		else {
+			return "";
+		}
+	}
+};
+
+/**
+ * Return the list of the arguments of a command pretty printed. Recursion step.
+ */
+template <typename T, typename... Args>
+struct Console::NameArguments<T, Args...> {
+	static inline std::string get(const std::vector<std::string> &argumentNames, unsigned int nextName, unsigned int requiredArguments) {
+		std::string nameT;
+		if (typeid(T) == typeid(int)) {
+			nameT = "<int";
+		}
+		else if (typeid(T) == typeid(float)) {
+			nameT = "<float";
+		}
+		else if (typeid(T) == typeid(std::string)) {
+			nameT = "<string";
+		}
+		else {
+			nameT = "<???";
+		}
+		if (argumentNames.size() > nextName && !argumentNames[nextName].empty()) {
+			nameT += " " + argumentNames[nextName];
+		}
+		nameT += ">";
+
+		if (nextName == requiredArguments) {
+			nameT = "[" + nameT;
+		}
+
+		return " " + nameT + NameArguments<Args...>::get(argumentNames, nextName + 1, requiredArguments);
+	}
+};
 
 
 #endif

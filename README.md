@@ -9,6 +9,19 @@ The [C++ Learning Group at the OpenTechSchool Zurich](https://www.meetup.com/ope
 - while learning about the use variadic templates,
 - refactors the code to avoid the dependence on the SFML framework.
 
+## Features
+
+## Documentation
+
+- Commands are case sensitive
+
+### Reserved words
+
+- `help`
+- `commands`
+
+You can get a list of commands by typing `help commands`.
+
 ## Status
 
 The implementation is in its infancy and only a basic version of `registerCommand()` and `processInput()` have been already implemented .
@@ -17,13 +30,14 @@ The implementation is in its infancy and only a basic version of `registerComman
 
 Next steps:
 
-- implement the list of commands. 
+- change `getUsage()` to return "(<string> name, [<int> i])" 
+- implement the filter for the list of commands. 
 - create a demo program. 
 - implement the destructor.
 - implement commandAlias
+- suggestion: if there is a return value, it can be be displayed on the console. Or: provide an output channel.
+
 - create a program that can be controlled through the console.
 - suggest similar commands if no matching found?
 - eventually implement a "tab complete" (return a list of commands starting with...)
-- suggestion: if there is a return value, it can be be displayed on the console. Or: provide an output channel.
 - rename the project as "CommandEngine"?
-- how to get print() not to print but to "return" the values (pass a stream?)

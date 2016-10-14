@@ -51,9 +51,11 @@ int main()
     for (auto i: Console::tokenizeLine("this is a text"))
           std::cout << i << std::endl;
     */
-    // console.processInput("doIt ?");
-    console.processInput("doIt");
-    console.processInput("say arthur");
-    console.processInput("say");
-    console.processInput("help");
+    std::cout << console.processInput("doIt");
+    std::cout << console.processInput("say arthur");
+    std::cout << console.processInput("say");
+    std::cout << console.processInput("help");
+    std::cout << console.processInput("help say");
+    std::cout << console.processInput("help commands");
+    // console.listOfCommands("filter"); // returns a vector of Console::CommandDescription?
 }
