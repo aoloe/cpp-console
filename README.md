@@ -36,13 +36,11 @@ Next steps:
 - move the action on strings (tokenize, argumentConverter, evt. the case insensitive functions) to a separate "Utils" class.
 - change `getUsage()` to return "(<string> name, [<int> i])"?
 - implement the filter for the list of commands. 
+- implement a `listOfCommands()` that returns a vector of strings.
 - create a demo program. 
-- implement commandAlias
-- suggestion: if there is a return value, it can be be displayed on the console. Or: provide an output channel.
 - check if we should bother about BOM
 - allow to run a list of commands from a text file?
 - check if the `names` list is really needed (only used in the assert)
-
 - suggest similar commands if no matching found?
 - eventually implement a "tab complete" (return a list of commands starting with...)
 - rename the project as "CommandEngine"?
@@ -50,4 +48,3 @@ Next steps:
   - add a command that already exists
   - add an alias that already exists (alias, command)
   - add an alias to a command that does not exist
-  
