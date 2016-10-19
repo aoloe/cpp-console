@@ -27,10 +27,11 @@ void Console::registerAlias(const std::string &alias, const std::string &command
     assert(commands.find(alias) == commands.end());
     assert(names.find(alias) == names.end()); // TODO: rename names?
     std::cout << "alias alias " << alias << std::endl;
-    std::cout << "alias command " << commands[command] << std::endl;
-    Command *c = commands[command];
-    std::cout << "alias command " << c->getUsage() << std::endl;
-    // commands[alias] = commands[command]; // TODO: why does it fail?
+    std::cout << "alias command " << command << std::endl;
+    std::cout << "alias address " << commands[command] << std::endl;
+    // Command *c = commands[command];
+    // std::cout << "alias usage " << c->getUsage() << std::endl;
+    // commands[alias] = commands[command]; // TODO: that's no good: we a get a multiple free in the destructor
     names.insert(alias);
 }
 
