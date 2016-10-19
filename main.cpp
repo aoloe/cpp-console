@@ -52,6 +52,7 @@ int main()
     std::cout << console.processInput("doIt");
     std::cout << console.processInput("say arthur");
     std::cout << console.processInput("say");
+    std::cout << console.processInput("hey dent");
     // std::cout << console.processInput("! dent");
     std::cout << console.processInput("help");
     std::cout << console.processInput("help say");
