@@ -1,6 +1,7 @@
 #include "console.h"
 
 #include <iostream>
+#include <memory>
 #include <string>
 #include <map>
 
@@ -11,27 +12,18 @@ Console::Console()
 
 Console::~Console()
 {
-    for (std::unordered_map<std::string, Command*>::iterator::value_type &vt : commands) {
-        delete vt.second;
-    }
     commands.clear();
 }
 
 /**
- * TODO:
- * - the alias does not get registered.
+ * @brief Add an alias to the command.
  */
 void Console::registerAlias(const std::string &alias, const std::string &command)
 {
     assert(commands.find(command) != commands.end());
     assert(commands.find(alias) == commands.end());
     assert(names.find(alias) == names.end()); // TODO: rename names?
-    std::cout << "alias alias " << alias << std::endl;
-    std::cout << "alias command " << command << std::endl;
-    std::cout << "alias address " << commands[command] << std::endl;
-    // Command *c = commands[command];
-    // std::cout << "alias usage " << c->getUsage() << std::endl;
-    // commands[alias] = commands[command]; // TODO: that's no good: we a get a multiple free in the destructor
+    commands[alias] = commands[command];
     names.insert(alias);
 }
 
@@ -173,9 +165,9 @@ void Console::listOfCommands(std::string filter)
     // TODO: implement the filter
     // TODO: we might want to make the filter case insensitive
     unsigned int count = 0;
-    std::map<std::string, Command*> ordered(commands.begin(), commands.end());
+    std::map<std::string, std::shared_ptr<Command>> ordered(commands.begin(), commands.end());
 
-    for (std::map<std::string, Command*>::iterator::value_type &value : ordered) {
+    for (std::map<std::string, std::shared_ptr<Command>>::iterator::value_type &value : ordered) {
         print(value.second->name);
         print("    " + value.second->description);
         count++;

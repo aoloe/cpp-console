@@ -3,6 +3,7 @@
 
 #include <cassert>
 
+#include <memory>
 #include <functional>
 #include <string>
 #include <sstream>
@@ -59,7 +60,7 @@ private:
         Command& operator=(const Command &) = delete;
     };
 
-    std::unordered_map<std::string, Command*> commands;
+    std::unordered_map<std::string, std::shared_ptr<Command>> commands;
     std::set<std::string> names;
     void registerHelpCommand();
     void helpCommand(std::string term);
@@ -86,7 +87,7 @@ private:
     void print(std::string output) {printBuffer << output << std::endl;}
 
 public:
-    // TODO: make this private
+    // TODO: make this private (or move to a StringUtils class)
     static std::vector<std::string> tokenizeLine(const std::string &line);
 
 };
@@ -105,7 +106,7 @@ void Console::registerCommand(const std::string &name, const std::string &descri
     assert(commands.find(name) == commands.end());
     assert(names.find(name) == names.end());
 
-    Command* command = new Command(name, description, sizeof...(Args), argumentNames, defaultArguments);
+    auto command = std::make_shared<Command>(name, description, sizeof...(Args), argumentNames, defaultArguments);
 
     command->call = [this, command, callback](std::vector<std::string> &arguments) {
  
