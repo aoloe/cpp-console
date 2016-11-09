@@ -14,6 +14,9 @@ The [C++ Learning Group at the OpenTechSchool Zurich](https://www.meetup.com/ope
 ## Documentation
 
 - Commands are case sensitive
+- Use double quotes (`"`) to enclose arguments with spaces in them.
+- Double quotes can be escaped with a backspace (`\"`).
+- If the backspace (`\`) is not followed by a double quote or a backslash, it is inserted literally. Double backslashes are reduced to a single one (`\\`).
 
 ### Reserved words
 
@@ -27,6 +30,19 @@ You can get a list of commands by typing `help commands`.
 Commands can be registered and triggered.
 
 The engine is not complete and has not been tested in production yet, but it should work.
+
+## Differences
+
+- std::string
+- Only commands no variables
+- only `help commandName` to get help on commands (no `commandName?`)
+- No direct output: print builds a string that is returned on demand
+- Commands are case sensitive
+- Escaping of quotes inside of quotes not yet implemented (probably with `\"`)
+- camelCase
+- everything in `.cpp` and `.h` (for now)
+- no naked pointers
+- reduced the LOCs
 
 ## Todo
 
@@ -48,3 +64,4 @@ Next steps:
   - add a command that already exists
   - add an alias that already exists (alias, command)
   - add an alias to a command that does not exist
+- check c++ interpreter goto (root.cern.ch/cint)

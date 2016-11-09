@@ -68,12 +68,6 @@ std::string Console::processInput(const std::string &line)
 /**
  * @brief Separate a string by spaces into words
  *
- * Remove:
- * - keep spaces inside of "quoted" text
- *
- * Eventually
- * - unescape "" escaped quotes (or backslash escaping?)
- *
  * TODO:
  * - Find if there is a better way to tokenize a string.
  */
@@ -82,6 +76,7 @@ std::vector<std::string> Console::tokenizeLine(const std::string &line)
     std::vector<std::string> out;
     std::string currWord;
     bool insideQuotes = false;
+    bool escapingQuotes = false;
     // TODO: and with auto?
     // TODO: we might want to use getwc() to correctly read unicode characters
     for (const unsigned char& c : line) {
@@ -102,6 +97,16 @@ std::vector<std::string> Console::tokenizeLine(const std::string &line)
                 out.push_back(currWord);
                 currWord.clear();
             }
+        }
+        else if (!escapingQuotes && c == '\\') {
+            escapingQuotes = true;
+        }
+        else if (escapingQuotes) {
+            if (c != '"' && c != '\\') {
+                currWord += '\\';
+            }
+            currWord += c;
+            escapingQuotes = false;
         }
         else if (c == '"') {
             // finish off word or start quoted text

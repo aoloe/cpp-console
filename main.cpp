@@ -55,8 +55,9 @@ int main()
     std::cout << console.processInput("say");
     std::cout << console.processInput("hey dent");
     std::cout << console.processInput("! dent");
+    std::cout << console.processInput("! \"\\\"arthur\\\" dent\"");
     std::cout << console.processInput("help");
     std::cout << console.processInput("help say");
     std::cout << console.processInput("help commands");
-    // console.listOfCommands("filter"); // returns a vector of Console::CommandDescription?
+    // console.listOfCommands("sa"); // returns a vector of Console::CommandDescription?
 }
