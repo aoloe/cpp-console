@@ -11,6 +11,10 @@ The [C++ Learning Group at the OpenTechSchool Zurich](https://www.meetup.com/ope
 
 ## Features
 
+## License
+
+This software is distributed under the MIT License (see the [License](LICENSE.md) and [Authors](AUTHORS.md) files.
+
 ## Documentation
 
 - Commands are case sensitive
