@@ -71,7 +71,6 @@ Next steps:
   - create an interactive demo program (libui? pure console?)
 - check if we should bother about BOM
 - allow to run a list of commands from a text file? (or is this something the using software should manage?)
-- check if the `names` list is really needed (only used in the assert)
 - suggest similar commands if no matching found? (or should it be a different library?)
 - eventually implement a "tab complete" (or should it be a different library?)
 - rename the project as "CommandEngine"?
