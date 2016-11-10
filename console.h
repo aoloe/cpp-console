@@ -62,7 +62,7 @@ private:
 
     std::unordered_map<std::string, std::shared_ptr<Command>> commands;
     void registerHelpCommand();
-    void helpCommand(std::string term, std::string argument);
+    void helpCommand(std::string term, std::string filter);
 
     template <typename T>
         struct argumentConverter {
@@ -258,6 +258,5 @@ struct Console::NameArguments<T, Args...> {
         return " " + nameT + NameArguments<Args...>::get(argumentNames, nextName + 1, requiredArguments);
     }
 };
-
 
 #endif

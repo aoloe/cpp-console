@@ -124,6 +124,9 @@ std::vector<std::string> Console::tokenizeLine(const std::string &line)
     return out;
 }
 
+/**
+ * @brief Register the help command.
+ */
 void Console::registerHelpCommand()
 {
     registerCommand(
@@ -136,10 +139,16 @@ void Console::registerHelpCommand()
 }
 
 /**
+ * @brief Return the help
+ *
+ * - return a general help if no term is set
+ * - return the list of commands if the term is "commands" (eventually filtered)
+ * - return the command usage and description if the term is a valid command.
+ *
  * TODO:
  * - if commands will ever be case insensitive, the filter should also be
  */
-void Console::helpCommand(std::string term, std::string argument)
+void Console::helpCommand(std::string term, std::string filter)
 {
     if (term.empty()) {
         // TODO by Michael: print version number
@@ -149,7 +158,7 @@ void Console::helpCommand(std::string term, std::string argument)
         print("Type \"help command_name\" to display detailed information.");
     }
     else if (term == "commands") {
-        for (const auto command: listOfCommands(argument)) {
+        for (const auto command: listOfCommands(filter)) {
             print(command);
             if (!commands[command]->description.empty())
                 print("    " + commands[command]->description);
@@ -169,6 +178,8 @@ void Console::helpCommand(std::string term, std::string argument)
 }
 
 /**
+ * @brief Return a vector of command names (eventually filtered)
+ *
  * TODO:
  * - if the commands will ever be case insensitive, the filter should also be
  */
