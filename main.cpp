@@ -48,15 +48,13 @@ int main()
     console.registerAlias("hey", "say"); // TODO: finish the alias implementation
     console.registerAlias("!", "say"); // TODO: finish the alias implementation
 
-    /*
     console.registerCommand(
         "serve", // command
         "serves the bottles", // description
         {"bottles", "beverage"}, // argument names
-        {0, "water"}, // argument default values
+        {"0", "water"}, // argument default values
         (std::function<void(int, std::string)>) ([](int bottles, std::string beverage) {serveTheDrinks(bottles, beverage);}) // callback
     );
-    */
 
     std::cout << console.processInput("doIt");
     std::cout << console.processInput("say arthur");
@@ -64,7 +62,7 @@ int main()
     std::cout << console.processInput("hey dent");
     std::cout << console.processInput("! dent");
     std::cout << console.processInput("! \"\\\"arthur\\\" dent\"");
-    // std::cout << console.processInput("serve 2 \"apple juice\"");
+    std::cout << console.processInput("serve 2 \"apple juice\"");
     std::cout << "--- help" << std::endl;
     std::cout << console.processInput("help");
     std::cout << "--- help say" << std::endl;
