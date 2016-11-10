@@ -1,4 +1,4 @@
-#include "console.h"
+#include "../src/console.h"
 #include <gmock/gmock.h>
 #include <string>
 

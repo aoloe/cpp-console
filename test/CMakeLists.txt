@@ -7,7 +7,7 @@ configure_file( CMakeLists.txt.in googletest-download/CMakeLists.txt )
 # we need to execute the build steps at config time so that
 # the tests can find the gtest libraries when they configure
 execute_process( COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
-  WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/googletest-download )
+  WORKING_DIRECTORY ${CMAKE_TEST_OUTPUT_DIRECTORY}/googletest-download )
 execute_process( COMMAND ${CMAKE_COMMAND} --build .
   WORKING_DIRECTORY ${CMAKE_TEST_OUTPUT_DIRECTORY}/googletest-download )
 

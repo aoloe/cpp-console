@@ -5,4 +5,3 @@ ADD_EXECUTABLE (console
     main.cpp
     ${SOURCE_FILES}
 )
-
