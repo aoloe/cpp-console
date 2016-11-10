@@ -62,7 +62,7 @@ Next steps:
 - move the action on strings (tokenize, argumentConverter, evt. the case insensitive functions) to a separate "Utils" class?
 - check that default values work correctly when there are multiple arguments.
 - change `getUsage()` to return "(<string> name, [<int> i])" instead of "<string name>, [<int i>]"?
-- create the `src/` (or `lib/ `?), `demo/`, `tests`, and `documentation/` directories and:
+- create the `src/` (or `lib/ `?), `samples/`, `tests`, and `documentation/` directories and:
   - move the existing files to the matching directory
   - adapt the `CMakeLists.txt`.
   - add the `make tests` and `make demo` commands.
