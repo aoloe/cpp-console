@@ -1,4 +1,4 @@
-The MIT License
+# The MIT License
 
 Copyright (c) 2016 (see the AUTHORS file for the list of copyright holders)
 
