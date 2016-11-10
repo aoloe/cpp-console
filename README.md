@@ -1,15 +1,18 @@
+ [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 # Console
 
-Console "engine" sending commands to a running program.
+Bind text commands to actions in your software.
 
-This console is heavily based on the "Game Console" created by Michael König and presented at the [August Meetup](https://www.meetup.com/Zurich-C-Meetup/events/233492659/) of the C++ User Group Zurich.
-
-The [C++ Learning Group at the OpenTechSchool Zurich](https://www.meetup.com/opentechschool-zurich/events/234084415/) is going through the code and:
-
-- while learning about the use variadic templates,
-- refactors the code to avoid the dependence on the SFML framework.
+This console is heavily based on the "Game Console" created by Michael König and presented at the [August Meetup](https://www.meetup.com/Zurich-C-Meetup/events/233492659/) of the C++ User Group Zurich and reworked by the [C++ Learning Group at the OpenTechSchool Zurich](https://www.meetup.com/opentechschool-zurich/events/234084415/)
 
 ## Features
+
+- Define commands with parameters and attach actions to them.
+- Optionally add aliases.
+- Trigger the commands.
+- Get a list of all available commands.
+- Get a help description for each command.
 
 ## License
 
