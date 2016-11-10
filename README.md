@@ -21,7 +21,7 @@ This software is distributed under the MIT License (see the [License](LICENSE.md
 
 ## Usage
 
-For now, see the `main.cpp` file for a first demo of the usage.
+For now, see the `main.cpp` file for a first demo.
 
 ## Documentation
 
