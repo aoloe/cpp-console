@@ -4,6 +4,7 @@
 #include <memory>
 #include <string>
 #include <map>
+#include <algorithm>
 
 Console::Console()
 {
@@ -186,5 +187,6 @@ std::vector<std::string> Console::listOfCommands(std::string filter)
             list.push_back(value.first);
         }
     }
+    std::sort(list.begin(), list.end());
     return list;
 }
