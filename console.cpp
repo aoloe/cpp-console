@@ -23,9 +23,7 @@ void Console::registerAlias(const std::string &alias, const std::string &command
 {
     assert(commands.find(command) != commands.end());
     assert(commands.find(alias) == commands.end());
-    assert(names.find(alias) == names.end()); // TODO: rename names?
     commands[alias] = commands[command];
-    names.insert(alias);
 }
 
 /**

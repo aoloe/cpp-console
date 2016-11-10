@@ -61,7 +61,6 @@ private:
     };
 
     std::unordered_map<std::string, std::shared_ptr<Command>> commands;
-    std::set<std::string> names;
     void registerHelpCommand();
     void helpCommand(std::string term);
 
@@ -101,7 +100,6 @@ void Console::registerCommand(const std::string &name, const std::string &descri
     assert(argumentNames.size() <= sizeof...(Args));
     assert(defaultArguments.size() <= sizeof...(Args));
     assert(commands.find(name) == commands.end());
-    assert(names.find(name) == names.end());
 
     auto command = std::make_shared<Command>(name, description, sizeof...(Args), argumentNames, defaultArguments);
 
@@ -152,7 +150,6 @@ void Console::registerCommand(const std::string &name, const std::string &descri
     };
 
     commands[name] = command;
-    names.insert(name);
 }
 
 /**
