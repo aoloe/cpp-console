@@ -22,50 +22,43 @@ This software is distributed under the MIT License (see the [License](LICENSE.md
 
 - Commands are case sensitive
 - Use double quotes (`"`) to enclose arguments with spaces in them.
-- Double quotes can be escaped with a backspace (`\"`).
-- If the backspace (`\`) is not followed by a double quote or a backslash, it is inserted literally. Double backslashes are reduced to a single one (`\\`).
+- Double quotes and backslash can be escaped with a backspace (`\"`, `\\`).
+- If the backspace (`\`) is not followed by a double quote or a backslash, it is inserted literally and so is the following character.
+- `help commandName` returns the help string for `commandName`.
+- `help commands` returns the list of commands with their descriptions.
+- No direct output: print builds a string that is returned on demand
 
 ### Reserved words
 
-- `help`
-
-You can get a list of commands by typing `help commands`.
+- `help`: an help command is automatically generated.
+- `commands`: if you create a `commands` command you won't be able to get help on it.
 
 ## Status
 
 Commands can be registered and triggered.
 
-The engine is not complete and has not been tested in production yet, but it should work.
+The engine is almost complete but has not been tested in production yet.
 
-## Differences
+## Notes
 
-- std::string
-- Only commands no variables
-- only `help commandName` to get help on commands (no `commandName?`)
-- No direct output: print builds a string that is returned on demand
-- Commands are case sensitive
-- Escaping of quotes inside of quotes not yet implemented (probably with `\"`)
-- camelCase
-- everything in `.cpp` and `.h` (for now)
-- no naked pointers
-- reduced the LOCs
+- A very similar project: <https://github.com/RippeR37/SLACC>.
 
 ## Todo
 
 Next steps:
 
-- ask for MIT / BSD licensing.
-- move the action on strings (tokenize, argumentConverter, evt. the case insensitive functions) to a separate "Utils" class.
+- move the action on strings (tokenize, argumentConverter, evt. the case insensitive functions) to a separate "Utils" class?
 - change `getUsage()` to return "(<string> name, [<int> i])"?
-- create a demo program. 
+- create a demo program.
+  - move `main.cpp` to a `demo/` directory
+  - move `the source files to a `src/` directory?
 - check if we should bother about BOM
-- allow to run a list of commands from a text file?
+- allow to run a list of commands from a text file? (or is this something the using software should manage?)
 - check if the `names` list is really needed (only used in the assert)
-- suggest similar commands if no matching found? (or should it be a different tool?)
-- eventually implement a "tab complete" (or should it be a different tool?)
+- suggest similar commands if no matching found? (or should it be a different library?)
+- eventually implement a "tab complete" (or should it be a different library?)
 - rename the project as "CommandEngine"?
 - tests:
   - add a command that already exists
   - add an alias that already exists (alias, command)
   - add an alias to a command that does not exist
-- check c++ interpreter goto (root.cern.ch/cint)
