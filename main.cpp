@@ -52,7 +52,7 @@ int main()
         "serve", // command
         "serves the bottles", // description
         {"bottles", "beverage"}, // argument names
-        {"0", "water"}, // argument default values
+        {"0", "water"}, // default values must all passed as strings
         (std::function<void(int, std::string)>) ([](int bottles, std::string beverage) {serveTheDrinks(bottles, beverage);}) // callback
     );
 
@@ -67,6 +67,8 @@ int main()
     std::cout << console.processInput("help");
     std::cout << "--- help say" << std::endl;
     std::cout << console.processInput("help say");
+    std::cout << "--- help serve" << std::endl;
+    std::cout << console.processInput("help serve");
     std::cout << "--- help commands" << std::endl;
     std::cout << console.processInput("help commands");
     std::cout << "--- listOfCommands()" << std::endl;

@@ -53,7 +53,8 @@ The engine is almost complete but has not been tested in production yet.
 Next steps:
 
 - move the action on strings (tokenize, argumentConverter, evt. the case insensitive functions) to a separate "Utils" class?
-- change `getUsage()` to return "(<string> name, [<int> i])"?
+- check that default values work correctly when there are multiple arguments.
+- change `getUsage()` to return "(<string> name, [<int> i])" instead of "<string name>, [<int i>]"?
 - create a demo program.
   - move `main.cpp` to a `demo/` directory
   - move `the source files to a `src/` directory?
