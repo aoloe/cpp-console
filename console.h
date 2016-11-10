@@ -31,8 +31,7 @@ public:
      */
     template <typename... Args>
         void registerCommand(const std::string &name, const std::string &description, const std::vector<std::string> &argumentNames, const std::vector<std::string> &defaultArguments, const std::function<void(Args...)> &callback);
-        void registerAlias(const std::string &alias, const std::string &command);
-
+    void registerAlias(const std::string &alias, const std::string &command);
 
     std::string processInput(const std::string &line);
     std::vector<std::string> listOfCommands(std::string filter = "");
