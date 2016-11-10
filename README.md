@@ -31,7 +31,7 @@ For now, see the `main.cpp` file for a first demo.
 - If the backspace (`\`) is not followed by a double quote or a backslash, it is inserted literally and so is the following character.
 - `help commandName` returns the help string for `commandName`.
 - `help commands` returns the list of commands with their descriptions.
-- No direct output: print builds a string that is returned on demand
+- No direct output: `print()` builds a string that can be returned to the caller.
 
 ### Reserved words
 
@@ -50,21 +50,32 @@ The engine is almost complete but has not been tested in production yet.
 
 ## Todo
 
+I would like an or two OTS workshops to:
+
+- Write the tests.
+- Write the demo files.
+- Write the documentation.
+- Check if there are memory leaks.
+
 Next steps:
 
 - move the action on strings (tokenize, argumentConverter, evt. the case insensitive functions) to a separate "Utils" class?
 - check that default values work correctly when there are multiple arguments.
 - change `getUsage()` to return "(<string> name, [<int> i])" instead of "<string name>, [<int i>]"?
-- create a demo program.
+- create the `src/` (or `lib/ `?), `demo/`, `tests`, and `documentation/` directories and:
+  - move the existing files to the matching directory
+  - adapt the `CMakeLists.txt`.
+  - add the `make tests` and `make demo` commands.
+- create one or two demo programs.
   - move `main.cpp` to a `demo/` directory
-  - move `the source files to a `src/` directory?
+  - create an interactive demo program (libui? pure console?)
 - check if we should bother about BOM
 - allow to run a list of commands from a text file? (or is this something the using software should manage?)
 - check if the `names` list is really needed (only used in the assert)
 - suggest similar commands if no matching found? (or should it be a different library?)
 - eventually implement a "tab complete" (or should it be a different library?)
 - rename the project as "CommandEngine"?
-- tests:
+- write tests:
   - add a command that already exists
   - add an alias that already exists (alias, command)
   - add an alias to a command that does not exist
