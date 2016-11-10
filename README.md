@@ -18,6 +18,10 @@ This console is heavily based on the "Game Console" created by Michael König an
 
 This software is distributed under the MIT License (see the [License](LICENSE.md) and [Authors](AUTHORS.md) files for more details).
 
+## Usage
+
+For now, see the `main.cpp` file for a first demo of the usage.
+
 ## Documentation
 
 - Commands are case sensitive
