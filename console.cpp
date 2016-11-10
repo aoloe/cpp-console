@@ -34,11 +34,8 @@ void Console::registerAlias(const std::string &alias, const std::string &command
  * The first token is the command to be run, the other tokens are
  * the arguments.
  *
- * If the second token is a question mark, output the command's
- * description.
- *
  * TODO:
- * - create an history of inputs
+ * - create an history of inputs (shouldn't it be on the client side?)
  * - eventually make the commands lowercase / case insensitive
  */
 std::string Console::processInput(const std::string &line)
@@ -57,7 +54,7 @@ std::string Console::processInput(const std::string &line)
         commands[identifier]->call(tokens);
     }
     else {
-        // TODO: we might want a more flexible way to give feedback
+        // TODO: we probably need a more flexible way to give feedback
         print("Unknown command \"" + identifier + "\".");
 
     }
@@ -76,9 +73,8 @@ std::vector<std::string> Console::tokenizeLine(const std::string &line)
     std::string currWord;
     bool insideQuotes = false;
     bool escapingQuotes = false;
-    // TODO: and with auto?
     // TODO: we might want to use getwc() to correctly read unicode characters
-    for (const unsigned char& c : line) {
+    for (const auto& c : line) {
         // ignore control characters
         if (std::iscntrl(c) != 0) {
             // TODO: BOM might not be recognized on non-Windows platforms. We might want to
@@ -133,17 +129,17 @@ void Console::registerHelpCommand()
     registerCommand(
         "help",
         "Prints information about using the console or a given command.",
-        {"term"},
-        {""},
-        (std::function<void(std::string)>) ([this](std::string term) {helpCommand(term);})
+        {"term", "argument"},
+        {"", ""},
+        (std::function<void(std::string, std::string)>) ([this](std::string term, std::string argument) {helpCommand(term, argument);})
     );
 }
 
 /**
  * TODO:
- * - if the commands will ever be case insensitive, the filter should also be
+ * - if commands will ever be case insensitive, the filter should also be
  */
-void Console::helpCommand(std::string term)
+void Console::helpCommand(std::string term, std::string argument)
 {
     if (term.empty()) {
         // TODO by Michael: print version number
@@ -153,8 +149,7 @@ void Console::helpCommand(std::string term)
         print("Type \"help command_name\" to display detailed information.");
     }
     else if (term == "commands") {
-        // TODO: implement the filter
-        for (const auto command: listOfCommands()) {
+        for (const auto command: listOfCommands(argument)) {
             print(command);
             if (!commands[command]->description.empty())
                 print("    " + commands[command]->description);

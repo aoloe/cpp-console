@@ -71,6 +71,8 @@ int main()
     std::cout << console.processInput("help serve");
     std::cout << "--- help commands" << std::endl;
     std::cout << console.processInput("help commands");
+    std::cout << "--- help commands s" << std::endl;
+    std::cout << console.processInput("help commands s");
     std::cout << "--- listOfCommands()" << std::endl;
     for (const auto command: console.listOfCommands())
           std::cout << command << std::endl;

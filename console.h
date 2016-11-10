@@ -62,7 +62,7 @@ private:
 
     std::unordered_map<std::string, std::shared_ptr<Command>> commands;
     void registerHelpCommand();
-    void helpCommand(std::string term);
+    void helpCommand(std::string term, std::string argument);
 
     template <typename T>
         struct argumentConverter {
