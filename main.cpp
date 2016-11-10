@@ -56,8 +56,16 @@ int main()
     std::cout << console.processInput("hey dent");
     std::cout << console.processInput("! dent");
     std::cout << console.processInput("! \"\\\"arthur\\\" dent\"");
+    std::cout << "--- help" << std::endl;
     std::cout << console.processInput("help");
+    std::cout << "--- help say" << std::endl;
     std::cout << console.processInput("help say");
+    std::cout << "--- help commands" << std::endl;
     std::cout << console.processInput("help commands");
-    // console.listOfCommands("sa"); // returns a vector of Console::CommandDescription?
+    std::cout << "--- listOfCommands()" << std::endl;
+    for (const auto command: console.listOfCommands())
+          std::cout << command << std::endl;
+    std::cout << "--- listOfCommands(sa)" << std::endl;
+    for (const auto command: console.listOfCommands("sa"))
+          std::cout << command << std::endl;
 }

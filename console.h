@@ -35,6 +35,7 @@ public:
 
 
     std::string processInput(const std::string &line);
+    std::vector<std::string> listOfCommands(std::string filter = "");
 
 private:
     struct Command {
@@ -64,9 +65,6 @@ private:
     std::set<std::string> names;
     void registerHelpCommand();
     void helpCommand(std::string term);
-    void listOfCommands(std::string filter);
-    void listOfCommands(/* std::string term */);
-
 
     template <typename T>
         struct argumentConverter {

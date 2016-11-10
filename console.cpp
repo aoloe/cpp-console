@@ -140,6 +140,10 @@ void Console::registerHelpCommand()
     );
 }
 
+/**
+ * TODO:
+ * - if the commands will ever be case insensitive, the filter should also be
+ */
 void Console::helpCommand(std::string term)
 {
     if (term.empty()) {
@@ -150,10 +154,15 @@ void Console::helpCommand(std::string term)
         print("Type \"help command_name\" to display detailed information.");
     }
     else if (term == "commands") {
-        listOfCommands("");
+        // TODO: implement the filter
+        for (const auto command: listOfCommands()) {
+            print(command);
+            if (!commands[command]->description.empty())
+                print("    " + commands[command]->description);
+        }
+
     }
     else {
-        // TODO: if we make the commands case insensitive, we have to do the same here too
         if (commands.find(term) != commands.end()) {
             print(commands[term]->getUsage());
             if (!commands[term]->description.empty())
@@ -165,17 +174,17 @@ void Console::helpCommand(std::string term)
     }
 }
 
-void Console::listOfCommands(std::string filter)
+/**
+ * TODO:
+ * - if the commands will ever be case insensitive, the filter should also be
+ */
+std::vector<std::string> Console::listOfCommands(std::string filter)
 {
-    // TODO: implement the filter
-    // TODO: we might want to make the filter case insensitive
-    unsigned int count = 0;
-    std::map<std::string, std::shared_ptr<Command>> ordered(commands.begin(), commands.end());
-
-    for (std::map<std::string, std::shared_ptr<Command>>::iterator::value_type &value : ordered) {
-        print(value.second->name);
-        print("    " + value.second->description);
-        count++;
+    std::vector<std::string> list{};
+    for(auto value: commands) {
+        if (filter == "" || value.first.compare(0, filter.length(), filter) == 0) {
+            list.push_back(value.first);
+        }
     }
-    print(std::to_string(count) + " matching commands found.");
+    return list;
 }
