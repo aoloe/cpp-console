@@ -3,7 +3,7 @@ set( UNIT_TESTS tokenizer.tests.cpp )
 # Download and unpack googletest at configure time
 # see https://crascit.com/2015/07/25/cmake-gtest/
 # copy the CMakeLists.txt.in to build area as CMakeLists.txt
-configure_file( CMakeLists.txt.in googletest-download/CMakeLists.txt )
+configure_file( CMakeLists.txt.in ${CMAKE_TEST_OUTPUT_DIRECTORY}/googletest-download/CMakeLists.txt )
 # we need to execute the build steps at config time so that
 # the tests can find the gtest libraries when they configure
 execute_process( COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
@@ -22,7 +22,6 @@ add_subdirectory( ${CMAKE_TEST_OUTPUT_DIRECTORY}/googletest-src
                  ${CMAKE_TEST_OUTPUT_DIRECTORY}/googletest-build )
 
 # these steps compile and link the unit-tests executable
-enable_testing()  # gives us a make test target
 add_test( all unit-tests ) # gives us a make test all target
 add_executable( unit-tests test-main.cpp ${SOURCE_FILES} ${UNIT_TESTS} )
 target_link_libraries( unit-tests gtest gmock )

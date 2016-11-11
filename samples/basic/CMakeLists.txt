@@ -1,7 +1,7 @@
-set(SOURCE_FILES
-    console.cpp
-)
-ADD_EXECUTABLE (console
+include_directories(${CONSOLE_SOURCES_DIR})
+link_directories(${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
+
+ADD_EXECUTABLE (console-basic
     main.cpp
-    ${SOURCE_FILES}
+    ${CONSOLE_SOURCES}
 )
