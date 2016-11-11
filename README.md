@@ -4,7 +4,7 @@
 
 Bind text commands to actions in your program.
 
-This console is heavily based on the "Game Console" created by Michael König and presented at the [August Meetup](https://www.meetup.com/Zurich-C-Meetup/events/233492659/) of the C++ User Group Zurich.  
+This console is on the "Game Console" created by Michael König and presented at the [August Meetup](https://www.meetup.com/Zurich-C-Meetup/events/233492659/) of the C++ User Group Zurich.  
 It has been heavily reworked by the [C++ Learning Group at the OpenTechSchool Zurich](https://www.meetup.com/opentechschool-zurich/events/234084415/) to only depend on the standard library and to ease the integration in existing programs.
 
 ## Features
@@ -21,7 +21,22 @@ This software is distributed under the MIT License (see the [License](LICENSE.md
 
 ## Usage
 
-For now, see the `main.cpp` file for a first demo.
+The simplest way to use this console, is to copy the `console.h` and `console.cpp` files in your project and build them with your code.
+
+Example of usages can be found in the `sample/` directory.
+
+If you want to run the example, you simply have to build the project:
+
+~~~.sh
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make
+~~~
+
+The samples binaries are generated in `build/samples/`
+
+You can also use the shared library that is generated during the build project and stored in `build/lib/`.
 
 ## Documentation
 
@@ -62,13 +77,8 @@ Next steps:
 - move the action on strings (tokenize, argumentConverter, evt. the case insensitive functions) to a separate "Utils" class?
 - check that default values work correctly when there are multiple arguments.
 - change `getUsage()` to return "(<string> name, [<int> i])" instead of "<string name>, [<int i>]"?
-- create the `src/` (or `lib/ `?), `samples/`, `tests`, and `documentation/` directories and:
-  - move the existing files to the matching directory
-  - adapt the `CMakeLists.txt`.
-  - add the `make tests` and `make demo` commands.
-- create one or two demo programs.
-  - move `main.cpp` to a `demo/` directory
-  - create an interactive demo program (libui? pure console?)
+- get googletest to work again
+- create an interactive demo program (libui? pure console?)
 - check if we should bother about BOM
 - allow to run a list of commands from a text file? (or is this something the using software should manage?)
 - suggest similar commands if no matching found? (or should it be a different library?)
@@ -78,3 +88,4 @@ Next steps:
   - add a command that already exists
   - add an alias that already exists (alias, command)
   - add an alias to a command that does not exist
+- eventually remove the test for the text parsing, since it's a private class function
